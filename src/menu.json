@@ -1,0 +1,60 @@
+[
+    {
+        "id" : 1,
+        "label": "Home",
+        "icon": "fa fa-home",
+        "url": "/"
+    },
+    {
+        "id" : 2,
+        "label": "About",
+        "url": "/about",
+        "icon" : "fa fa-info-circle"
+    },
+    {
+        "id" : 3,
+        "label":"Services",
+        "icon": "fa fa-cog",
+        "url": "/services",
+        "subMenuItems": [
+            {
+            "id" : 4,
+            "label" : "Service 1",
+            "icon": "fa fa-wrench",
+            "url": "/services/service-1"
+            },
+            {
+                "id" : 5,
+                "label" : "Service 2",
+                "icon" : "fa fa-wrench",
+                "url" : "/services/service-2",
+                "subMenuItems": [
+                    {
+                    "id" : 6,
+                    "label" : "Service 2a",
+                    "icon": "fa fa-wrench",
+                    "url": "/services/service-2a"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "label": "Projects",
+        "url": "/projects",
+        "icon": "fa fa-cog"
+    },
+    {
+        "id": 8,
+        "label": "Skills",
+        "url": "/skills",
+        "icon": "fa fa-wrench"
+    },
+    {
+        "id" : 9,
+        "label": "Contact",
+        "url": "/contact",
+        "icon" : "fa fa-cog"
+    }
+]

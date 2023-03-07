@@ -15,6 +15,5 @@ export default function About() {
         Laborum, voluptas natus?
       </Typography>
     </Box>
-    
   );
 }
