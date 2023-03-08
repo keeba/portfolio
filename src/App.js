@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useLocation} from 'react-router-dom';
+import {Route, Routes, useLocation} from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,6 +9,8 @@ import About from './routes/about';
 import Projects from './routes/projects';
 import Skills from './routes/skills';
 import Contact from './routes/contact';
+import Services from './routes/services';
+import ServiceDetails from './routes/servicedetails';
 
 const drawerWidth = 240;
 
@@ -44,7 +46,6 @@ export default function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const location = useLocation();
-  const pathName = location.pathname.replace('/','');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -61,10 +62,17 @@ export default function App() {
       <SideBar theme={theme} open={open} handleDrawerClose={handleDrawerClose} pathName={location.pathname}/>
       <Main open={open}>
         <DrawerHeader />
-        {(!pathName || pathName == 'about') && <About />}
-        {pathName == 'projects' && <Projects />}
-        {pathName == 'skills' && <Skills />}
-        {pathName == 'contact' && <Contact />}
+        <Routes>
+          <Route path='/' element={<About />} />
+          <Route path='about' element={<About />} />
+          <Route path='projects' element={<Projects />} />
+          <Route path='services'>
+            <Route path=':id' element={<ServiceDetails />}/>
+            <Route index element={<Services />}/>
+          </Route>
+          <Route path='skills' element={<Skills />} />
+          <Route path='contact' element={<Contact />} />
+        </Routes>
       </Main>
     </Box>
   );

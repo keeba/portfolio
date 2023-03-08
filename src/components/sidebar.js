@@ -28,6 +28,29 @@ export default function SideBar({theme, open, handleDrawerClose, pathName}) {
     setOpen({...hOpen, [id]: val });
   };
 
+  React.useEffect(() => {
+    const hTempOpen = {};
+    routes.forEach((route) => {
+      if (pathName.match(route.url)) {
+        if (route.subMenuItems && route.subMenuItems.length > 0) {
+          route.subMenuItems.forEach((subRoute) => {
+            if (pathName.match(subRoute.url)) {
+              hTempOpen[route.id] = true;
+              if (subRoute.subMenuItems && subRoute.subMenuItems.length > 0) {
+                subRoute.subMenuItems.forEach((subsubRoute) => {
+                  if (pathName.match(subsubRoute.url)) {
+                    hTempOpen[subRoute.id] = true;
+                  }
+                })
+              }
+            }
+          })
+        }
+      }
+    });
+    setOpen(hTempOpen);
+  }, []);
+
   return (
     <Drawer
     sx={{
@@ -48,32 +71,32 @@ export default function SideBar({theme, open, handleDrawerClose, pathName}) {
             </IconButton>
         </DrawerHeader>
         <Divider />
-        <List key="list1">
+        <List>
             {
-              routes.map((route, index) => (
-                <>
+              routes.map((route) => (
+                <div key={'div' + route.id}>
                   <Route route={route} pathName={pathName} open={hOpen[route.id]} handleClick={handleClick}/>
                   {(route.subMenuItems && route.subMenuItems.length > 0) &&
-                    <Collapse key="collapse1" in={hOpen[route.id]} timeout="auto" unmountOnExit>
-                      <List key="list2" component="div" disablePadding sx={{pl:3}}>
-                        {route.subMenuItems.map((subRoute, index) => (
-                          <>
-                            <Route route={subRoute} pathName={pathName} open={hOpen[subRoute.id]} handleClick={handleClick}/>
+                    <Collapse in={hOpen[route.id]} timeout="auto">
+                      <List component="div" sx={{pl:3}}>
+                        {route.subMenuItems.map((subRoute) => (
+                          <div key={'div' + subRoute.id}>
+                            <Route  route={subRoute} pathName={pathName} open={hOpen[subRoute.id]} handleClick={handleClick}/>
                             {(subRoute.subMenuItems && subRoute.subMenuItems.length > 0) &&
-                              <Collapse key="collapse2" in={hOpen[subRoute.id]}>
-                                <List key="list3" component="div" disablePadding timeout="auto" unmountOnExit sx={{pl:3}}>
-                                  {subRoute.subMenuItems.map((subsubRoute, index) => (
-                                      <Route route={subsubRoute} pathName={pathName}/>
+                              <Collapse in={hOpen[subRoute.id]}>
+                                <List component="div"  timeout="auto" sx={{pl:3}}>
+                                  {subRoute.subMenuItems.map((subsubRoute) => (
+                                      <Route key={'subsubRoute' + subsubRoute.id} route={subsubRoute} pathName={pathName}/>
                                   ))}
                                 </List>
                               </Collapse>
                             }
-                            </>
+                          </div>
                         ))}
                       </List>
                     </Collapse>
                   }
-                </>
+                </div>
               ))
             }
         </List>

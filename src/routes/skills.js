@@ -19,7 +19,7 @@ export default function Skills() {
             </Typography>
             <List
                 sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                {skills.map((skill) => <ListItem disablePadding>
+                {skills.map((skill) => <ListItem>
                     <ListItemButton>
                     <ListItemIcon>
                         <StarIcon />
