@@ -2,11 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');   
 const codegen = require('postman-code-generators');
 const sdk = require('postman-collection');
+const cors = require('cors')
+
 const request = new sdk.Request('http://localhost:3001/api/request');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 const port = 3001;
 
