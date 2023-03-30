@@ -4,8 +4,6 @@ const codegen = require('postman-code-generators');
 const sdk = require('postman-collection');
 const cors = require('cors')
 
-const request = new sdk.Request('http://localhost:3001/api/request');
-
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,11 +22,12 @@ app.get('/getLanguages', (req, res) => {
   res.send(codegen.getLanguageList())
 })
 
-app.get('/getCode/:lv', (req, res) => {
-    console.log(req.params);
-    let[language, variant] = req.params.lv.split('_');
-    codegen.convert(language, variant, request, options, function(error, snippet) {
+app.post('/getCode', (req, res) => {
+    console.log(req.body);
+    const request = new sdk.Request(req.body.url);
+    codegen.convert(req.body.language, req.body.variant, request, options, function(error, snippet) {
         if (error) {
+            console.log(error);
             res.send(error);
         }
         res.send(snippet);
